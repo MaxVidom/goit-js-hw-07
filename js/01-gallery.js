@@ -1,6 +1,10 @@
 import { galleryItems } from './gallery-items.js';
-// Change code below this line
-const galleryRef = document.querySelector('.gallery');
+
+const galleryRef = document.querySelector('div.gallery');
+
+createGalery();
+
+galleryRef.addEventListener('click', modalLargeImageUrl);
 
 function createGalery() {
     const galleryList = galleryItems.map((item) => {
@@ -16,7 +20,19 @@ function createGalery() {
         </div>`;
     }).join("");
     galleryRef.insertAdjacentHTML("afterbegin", galleryList);
-
 }
-createGalery();
+
+function modalLargeImageUrl(evt) {
+    evt.preventDefault();
+    if (evt.target.nodeName !== "IMG") {
+        return;
+    }
+    const urlLLargeImage = evt.target.dataset.source;
+    const instance = basicLightbox.create(`
+    <img src="${urlLLargeImage}" width="800" height="600">
+    `);
+    instance.show();
+    console.log(urlLLargeImage);
+}
+
 console.log(galleryItems);
